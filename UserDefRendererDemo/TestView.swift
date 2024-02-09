@@ -136,6 +136,9 @@ public extension NSView {
     result.makeSimpleConstraint(.width, relation: .greaterThanOrEqual, value: minWidth)
     result.makeSimpleConstraint(.height, relation: .greaterThanOrEqual, value: minHeight)
     result.contentView = self
+    if let self = self as? NSStackView, self.orientation == .horizontal {
+      self.spacing = 0
+    }
     return result
   }
 }
@@ -162,9 +165,6 @@ public extension NSStackView {
     guard !viewsRendered.isEmpty else { return nil }
     var itemWidth = width
     var splitterDelta: CGFloat = 4
-    if #unavailable(macOS 10.10) {
-      splitterDelta = 8
-    }
     splitterDelta = withDividers ? splitterDelta : 0
     if let width = width, orientation == .horizontal, viewsRendered.count > 0 {
       itemWidth = (width - splitterDelta) / CGFloat(viewsRendered.count) - 6
