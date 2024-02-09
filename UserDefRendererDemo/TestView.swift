@@ -131,8 +131,8 @@ public extension NSView {
     if result.title.isEmpty {
       result.titlePosition = .noTitle
     }
-    let minWidth = max(maxDimension.width + 12, result.intrinsicContentSize.width)
-    let minHeight = max(maxDimension.height + result.titleRect.height + 14, result.intrinsicContentSize.height)
+    let minWidth = Swift.max(maxDimension.width + 12, result.intrinsicContentSize.width)
+    let minHeight = Swift.max(maxDimension.height + result.titleRect.height + 14, result.intrinsicContentSize.height)
     result.makeSimpleConstraint(.width, relation: .greaterThanOrEqual, value: minWidth)
     result.makeSimpleConstraint(.height, relation: .greaterThanOrEqual, value: minHeight)
     result.contentView = self
