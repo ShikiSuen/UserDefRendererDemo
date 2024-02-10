@@ -164,7 +164,7 @@ public extension NSStackView {
     }
     guard !viewsRendered.isEmpty else { return nil }
     var itemWidth = width
-    var splitterDelta: CGFloat = 4
+    var splitterDelta: CGFloat = 3
     splitterDelta = withDividers ? splitterDelta : 0
     if let width = width, orientation == .horizontal, viewsRendered.count > 0 {
       itemWidth = (width - splitterDelta) / CGFloat(viewsRendered.count) - 6
@@ -833,6 +833,7 @@ public extension UserDef {
 public class SampleSettingsView: NSViewController {
   let windowWidth: CGFloat = 577
   let contentWidth: CGFloat = 512
+  var halfContentWidth: CGFloat { (contentWidth - 14 - 1) / 2 }
 
   override public func loadView() {
     view = body ?? .init()
@@ -854,8 +855,8 @@ public class SampleSettingsView: NSViewController {
         }
       }?.boxed()
       NSStackView.buildSection(.horizontal, width: contentWidth) {
-        UserDef.testBool.render(fixWidth: contentWidth / 2 - 4)
-        UserDef.testBool.render(fixWidth: contentWidth / 2 - 4)
+        UserDef.testBool.render(fixWidth: halfContentWidth)
+        UserDef.testBool.render(fixWidth: halfContentWidth)
       }?.boxed()
       NSStackView.build(.horizontal, insets: .new(all: 0, left: 16, right: 16)) {
         "這是腳註文字。".makeNSLabel(descriptive: true, fixWidth: contentWidth)
