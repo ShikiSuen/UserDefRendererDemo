@@ -858,7 +858,7 @@ public class SampleSettingsView: NSViewController {
         UserDef.testBool.render(fixWidth: contentWidth / 2 - 4)
       }?.boxed()
       NSStackView.build(.horizontal, insets: .new(all: 0, left: 16, right: 16)) {
-        "這是腳註問姿。".makeNSLabel(descriptive: true, fixWidth: contentWidth)
+        "這是腳註文字。".makeNSLabel(descriptive: true, fixWidth: contentWidth)
         NSView()
       }
       NSView().makeSimpleConstraint(.height, relation: .equal, value: NSFont.systemFontSize)
