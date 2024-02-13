@@ -114,8 +114,26 @@ public extension NSView {
     relation: NSLayoutConstraint.Relation,
     value: CGFloat?
   ) -> NSView {
-    guard let value = value else { return self }
     translatesAutoresizingMaskIntoConstraints = false
+    guard let value = value, value >= 0 else { return self }
+    var handled = false
+    constraints.forEach { constraint in
+      guard constraint.firstAttribute == attribute else { return }
+      guard constraint.relation == relation else { return }
+      switch constraint.relation {
+      case .lessThanOrEqual:
+        constraint.constant = Swift.min(value, constraint.constant)
+        handled = true
+      case .equal:
+        constraint.constant = value
+        handled = true
+      case .greaterThanOrEqual:
+        constraint.constant = Swift.max(value, constraint.constant)
+        handled = true
+      default: break
+      }
+    }
+    guard !handled else { return self }
     let widthConstraint = NSLayoutConstraint(
       item: self, attribute: attribute, relatedBy: relation, toItem: nil,
       attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: value
