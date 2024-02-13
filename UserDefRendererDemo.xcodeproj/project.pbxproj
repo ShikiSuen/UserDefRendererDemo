@@ -3,23 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BD289E82B7B69B500D3E41A /* TestView in Frameworks */ = {isa = PBXBuildFile; productRef = 5BD289E72B7B69B500D3E41A /* TestView */; };
 		5BF447D12B7681F400ED157C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF447D02B7681F400ED157C /* AppDelegate.swift */; };
 		5BF447D32B7681F500ED157C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BF447D22B7681F500ED157C /* Assets.xcassets */; };
 		5BF447D62B7681F500ED157C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF447D42B7681F500ED157C /* MainMenu.xib */; };
-		5BF447DE2B76820400ED157C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF447DD2B76820400ED157C /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5BD289E52B7B695800D3E41A /* TestView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TestView; path = Packages/TestView; sourceTree = "<group>"; };
 		5BF447CD2B7681F400ED157C /* UserDefRendererDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserDefRendererDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF447D02B7681F400ED157C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BF447D22B7681F500ED157C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BF447D52B7681F500ED157C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5BF447D72B7681F500ED157C /* UserDefRendererDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UserDefRendererDemo.entitlements; sourceTree = "<group>"; };
-		5BF447DD2B76820400ED157C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD289E82B7B69B500D3E41A /* TestView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +37,7 @@
 		5BF447C42B7681F400ED157C = {
 			isa = PBXGroup;
 			children = (
+				5BD289E52B7B695800D3E41A /* TestView */,
 				5BF447CF2B7681F400ED157C /* UserDefRendererDemo */,
 				5BF447CE2B7681F400ED157C /* Products */,
 			);
@@ -56,7 +58,6 @@
 				5BF447D22B7681F500ED157C /* Assets.xcassets */,
 				5BF447D42B7681F500ED157C /* MainMenu.xib */,
 				5BF447D72B7681F500ED157C /* UserDefRendererDemo.entitlements */,
-				5BF447DD2B76820400ED157C /* TestView.swift */,
 			);
 			path = UserDefRendererDemo;
 			sourceTree = "<group>";
@@ -77,6 +78,9 @@
 			dependencies = (
 			);
 			name = UserDefRendererDemo;
+			packageProductDependencies = (
+				5BD289E72B7B69B500D3E41A /* TestView */,
+			);
 			productName = UserDefRendererDemo;
 			productReference = 5BF447CD2B7681F400ED157C /* UserDefRendererDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -105,6 +109,9 @@
 				Base,
 			);
 			mainGroup = 5BF447C42B7681F400ED157C;
+			packageReferences = (
+				5BD289E62B7B69B500D3E41A /* XCLocalSwiftPackageReference "Packages/TestView" */,
+			);
 			productRefGroup = 5BF447CE2B7681F400ED157C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -131,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BF447DE2B76820400ED157C /* TestView.swift in Sources */,
 				5BF447D12B7681F400ED157C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -302,6 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -340,6 +348,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5BD289E62B7B69B500D3E41A /* XCLocalSwiftPackageReference "Packages/TestView" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/TestView;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5BD289E72B7B69B500D3E41A /* TestView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TestView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5BF447C52B7681F400ED157C /* Project object */;
 }

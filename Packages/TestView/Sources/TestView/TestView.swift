@@ -111,32 +111,59 @@ public extension NSEdgeInsets {
 public extension NSView {
   @discardableResult func makeSimpleConstraint(
     _ attribute: NSLayoutConstraint.Attribute,
-    relation: NSLayoutConstraint.Relation,
+    relation givenRelation: NSLayoutConstraint.Relation,
     value: CGFloat?
   ) -> NSView {
     translatesAutoresizingMaskIntoConstraints = false
-    guard let value = value, value >= 0 else { return self }
+    guard let givenValue = value, givenValue >= 0 else { return self }
     var handled = false
     constraints.forEach { constraint in
       guard constraint.firstAttribute == attribute else { return }
-      guard constraint.relation == relation else { return }
-      switch constraint.relation {
-      case .lessThanOrEqual:
-        constraint.constant = Swift.min(value, constraint.constant)
+      switch (constraint.relation, givenRelation) {
+      case (.lessThanOrEqual, .lessThanOrEqual):
+        constraint.constant = Swift.min(givenValue, constraint.constant)
         handled = true
-      case .equal:
-        constraint.constant = value
+      case (.lessThanOrEqual, .equal):
+        constraint.constant = Swift.max(givenValue, constraint.constant)
         handled = true
-      case .greaterThanOrEqual:
-        constraint.constant = Swift.max(value, constraint.constant)
+      case (.lessThanOrEqual, .greaterThanOrEqual):
+        switch givenValue {
+        case constraint.constant, ..<constraint.constant: // Smaller & Equal
+          handled = false
+        default: // Bigger
+          removeConstraint(constraint)
+          handled = false
+        }
+      case (.equal, .lessThanOrEqual):
+        constraint.constant = Swift.min(givenValue, constraint.constant)
+        handled = true
+      case (.equal, .equal):
+        constraint.constant = Swift.min(givenValue, constraint.constant) // 往往都是外圍容器最後賦值，所以取最小值。
+        handled = true
+      case (.equal, .greaterThanOrEqual):
+        constraint.constant = Swift.max(givenValue, constraint.constant)
+        handled = true
+      case (.greaterThanOrEqual, .lessThanOrEqual):
+        switch givenValue {
+        case ..<constraint.constant: // Smaller
+          removeConstraint(constraint)
+          handled = false
+        default: // Bigger & Equal
+          handled = false
+        }
+      case (.greaterThanOrEqual, .equal):
+        constraint.constant = Swift.max(givenValue, constraint.constant)
+        handled = true
+      case (.greaterThanOrEqual, .greaterThanOrEqual):
+        constraint.constant = Swift.max(givenValue, constraint.constant)
         handled = true
       default: break
       }
     }
     guard !handled else { return self }
     let widthConstraint = NSLayoutConstraint(
-      item: self, attribute: attribute, relatedBy: relation, toItem: nil,
-      attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: value
+      item: self, attribute: attribute, relatedBy: givenRelation, toItem: nil,
+      attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: givenValue
     )
     addConstraint(widthConstraint)
     return self
@@ -503,6 +530,7 @@ public enum UserDef: String {
   case testStringWithComboBox = "kStringsWithComboBox"
   case testStringWithFixedOptions = "kStringsWithFixedOptions"
   case testBool = "kBool"
+  case testBoolSansOptions = "kBoolSansOptions"
   case testIntWithOptions = "kIntWithOptions"
   case testIntSansOptions = "kIntSansOptions"
 }
@@ -572,6 +600,7 @@ extension UserDef: UserDefProtocol {
     case .testStringWithComboBox: .string
     case .testStringWithFixedOptions: .string
     case .testBool: .bool
+    case .testBoolSansOptions: .bool
     case .testIntWithOptions: .integer
     case .testIntSansOptions: .integer
     }
@@ -607,6 +636,10 @@ extension UserDef: UserDefProtocol {
           (0, "停用"),
           (1, "啟用"),
         ]
+      )
+    case .testBoolSansOptions: return .init(
+        userDef: self, shortTitle: "測試備選選項，但標題要長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度。",
+        description: "該選項有備選內容。選擇的內容是國語，寫入 UserDefaults 的是 Bool。長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度。長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度長度。"
       )
     case .testIntWithOptions: return .init(
         userDef: self,
@@ -716,7 +749,9 @@ public extension UserDefRenderableCocoa {
       control
     }
     if let fixedWidth = fixedWidth {
-      textLabel?.preferredMaxLayoutWidth = fixedWidth - controlWidth
+      let specifiedWidth = fixedWidth - controlWidth - NSFont.systemFontSize
+      textLabel?.preferredMaxLayoutWidth = specifiedWidth
+      textLabel?.makeSimpleConstraint(.width, relation: .lessThanOrEqual, value: specifiedWidth)
     }
     textLabel?.sizeToFit()
     return result

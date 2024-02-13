@@ -5,7 +5,8 @@
 //  Created by ShikiSuen on 2024/2/9.
 //
 
-import Cocoa
+import AppKit
+import TestView
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
